@@ -2,6 +2,7 @@ package kr.ac.kumoh.s20190558.s23w04carddealer
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kr.ac.kumoh.s20190558.s23w04carddealer.databinding.ActivityMainBinding
@@ -18,17 +19,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(main.root)
 
         model = ViewModelProvider(this)[CardDealerViewModel::class.java]
-        // !!는 널이 될수가 절대 없다는 걸 알려줌
+        // !!는 null 이 될수가 절대 없다는 걸 알려줌
         model.cards.observe(this, Observer {
             val res = IntArray(5)
             for (i in res.indices) {
-                res[i] = resources.getIdentifier(
-                    getCardName(it[i]), // model.cards.values!![i]
-                    "drawable",
-                    packageName
+                val resourceId = resources.getIdentifier(
+                    getCardName(it[i]), "drawable", packageName
                 )
+                val cardView: ImageView? = when (i) {
+                    0 -> main.card1
+                    1 -> main.card2
+                    2 -> main.card3
+                    3 -> main.card4
+                    4 -> main.card5
+                    else -> null
+                }
+                cardView?.setImageResource(resourceId)
             }
-            main.card1.setImageResource(res[0])
+            main.txtRank.text = getPedigree(res)
         })
 
         main.btnShuffle.setOnClickListener {
@@ -36,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    private fun getCardName(c: Int): String { // TODO: int형으로 반환 할 것
+    private fun getCardName(c: Int): String {
         var shape = when (c / 13) {
             0 -> "spades"
             1 -> "diamonds"
@@ -62,11 +70,14 @@ class MainActivity : AppCompatActivity() {
             }
             else -> "error"
         }
-//        return if (number in arrayOf("jack", "queen", "king"))
-//            "c_${number}_of_${shape}2"
-//        else
-//            "c_${number}_of_${shape}"
         return "c_${number}_of_${shape}"
     }
+    private fun getPedigree(deck: IntArray): String {
+        var pedigree = "No Hand"
+        val cardArray = IntArray(13) {0}
+        val patternArray = IntArray(4) {0}
 
+
+        return pedigree
+    }
 }
