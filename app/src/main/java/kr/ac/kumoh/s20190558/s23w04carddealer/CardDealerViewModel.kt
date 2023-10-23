@@ -43,6 +43,14 @@ class CardDealerViewModel : ViewModel() {
                 return "Royal Straight Flush"
             }
         }
+        // 백 스트레이트 플러쉬
+        for (i in 0..3) {
+            if (cardMatrix[i][0] == 1 && cardMatrix[i][1] == 1 && cardMatrix[i][2] == 1 &&
+                cardMatrix[i][3] == 1 && cardMatrix[i][4] == 1
+            ) {
+                return "Back Straight Flush"
+            }
+        }
         // 스트레이트 플러쉬
         for (i in 0..3) {
             for (j in 0..8) {
@@ -85,13 +93,21 @@ class CardDealerViewModel : ViewModel() {
                 return "Flush"
             }
         }
-        //  스트레이트
+        // 마운틴
         var uniqueNumbers = IntArray(5)
         for (i in uniqueNumbers.indices) {
             uniqueNumbers[i] = deck[i] % 13
         }
         uniqueNumbers.sort()
-        for (i in 0..8) {
+        if (uniqueNumbers[0] == 0 && uniqueNumbers[1] == 9 && uniqueNumbers[2] == 10 &&
+            uniqueNumbers[3] == 11 && uniqueNumbers[4] == 12)
+            return "Mountain"
+        // 백 스트레이트
+        if (uniqueNumbers[0] == 0 && uniqueNumbers[1] == 1 && uniqueNumbers[2] == 2 &&
+            uniqueNumbers[3] == 3 && uniqueNumbers[4] == 4)
+            return "Back Straight"
+        // 스트레이트
+        for (i in 1..8) {
             if (uniqueNumbers[0] == i && uniqueNumbers[1] == i + 1 && uniqueNumbers[2] == i + 2 &&
                 uniqueNumbers[3] == i + 3 && uniqueNumbers[4] == i + 4) {
                 return "Straight"
