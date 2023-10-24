@@ -6,14 +6,14 @@ import androidx.lifecycle.ViewModel
 import kotlin.random.Random
 
 class CardDealerViewModel : ViewModel() {
-    private var _cards = MutableLiveData<IntArray>(IntArray(5) {-1})
+    private var _cards = MutableLiveData(IntArray(5) { -1 })
     private var _handRank = MutableLiveData<String>()
     val cards: LiveData<IntArray>
         get() = _cards
     val handRank: LiveData<String>
         get() = _handRank
     fun shuffle() {
-        var num = 0
+        var num : Int
         val newCards = IntArray(5) {-1}
 
         for (i in newCards.indices) {
@@ -27,7 +27,7 @@ class CardDealerViewModel : ViewModel() {
         _handRank.value = getPedigree(newCards) // 족보 계산
     }
     private fun getPedigree(deck: IntArray): String {
-        var cardMatrix = Array(4) { IntArray(13) { 0 } }
+        val cardMatrix = Array(4) { IntArray(13) { 0 } }
 
         for (cardNum in deck) {
             val cPattern = cardNum / 13
@@ -94,7 +94,7 @@ class CardDealerViewModel : ViewModel() {
             }
         }
         // 마운틴
-        var uniqueNumbers = IntArray(5)
+        val uniqueNumbers = IntArray(5)
         for (i in uniqueNumbers.indices) {
             uniqueNumbers[i] = deck[i] % 13
         }
