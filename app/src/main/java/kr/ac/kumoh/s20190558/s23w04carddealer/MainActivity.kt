@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
                     4 -> main.card5
                     else -> null
                 }
-                Log.i("Card NUM!!", "${res[i]} + ${i+1} + ${it[i]}")
                 cardView?.setImageResource(res[i])
             }
         })
