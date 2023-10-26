@@ -37,7 +37,7 @@ class CardDealerViewModel : ViewModel() {
 
         // 로얄 스트레이트 플러쉬
         for (i in 0..3) {
-            if (cardMatrix[i][8] == 1 && cardMatrix[i][9] == 1 && cardMatrix[i][10] == 1 &&
+            if (cardMatrix[i][0] == 1 && cardMatrix[i][9] == 1 && cardMatrix[i][10] == 1 &&
                 cardMatrix[i][11] == 1 && cardMatrix[i][12] == 1
             ) {
                 return "Royal Straight Flush"
