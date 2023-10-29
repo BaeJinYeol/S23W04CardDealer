@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity() {
         main.btnShuffle.setOnClickListener {
             model.shuffle()
         }
-
     }
+
     @SuppressLint("DiscouragedApi")
     private fun getCardDrawableId(c: Int): Int {
         var shape = when (c / 13) {
@@ -69,7 +69,12 @@ class MainActivity : AppCompatActivity() {
             }
             else -> "error"
         }
-        val resName = "c_${number}_of_${shape}"
+
+        val resName = if (number == "error" || shape == "error"){
+            "c_red_joker"
+        } else {
+            "c_${number}_of_${shape}"
+        }
         return resources.getIdentifier(resName, "drawable", packageName)
     }
 }
