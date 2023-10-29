@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">S23W04CardDealer</string>
+    <string name="title">Hand Ranking</string>
+    <string name="btn_txt">Good Luck</string>
+    <string name="card1_description">Card 1</string>
+    <string name="card2_description">Card 2</string>
+    <string name="card3_description">Card 3</string>
+    <string name="card4_description">Card 4</string>
+    <string name="card5_description">Card 5</string>
 </resources>

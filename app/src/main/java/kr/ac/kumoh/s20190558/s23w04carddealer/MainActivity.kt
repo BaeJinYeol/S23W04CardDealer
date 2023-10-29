@@ -1,10 +1,9 @@
 package kr.ac.kumoh.s20190558.s23w04carddealer
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kr.ac.kumoh.s20190558.s23w04carddealer.databinding.ActivityMainBinding
 
@@ -14,19 +13,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         main = ActivityMainBinding.inflate(layoutInflater)
         setContentView(main.root)
 
         model = ViewModelProvider(this)[CardDealerViewModel::class.java]
-        // !!는 null 이 될수가 절대 없다는 걸 알려줌
-        model.cards.observe(this, Observer {
+
+        model.cards.observe(this) {
             val res = IntArray(5)
             for (i in res.indices) {
-                res[i] = resources.getIdentifier(
-                    getCardName(it[i]), "drawable", packageName
-                )
+                res[i] = getCardDrawableId(it[i])
                 val cardView: ImageView? = when (i) {
                     0 -> main.card1
                     1 -> main.card2
@@ -37,16 +33,17 @@ class MainActivity : AppCompatActivity() {
                 }
                 cardView?.setImageResource(res[i])
             }
-        })
-        model.handRank.observe(this, Observer {
+        }
+        model.handRank.observe(this) {
             main.txtRank.text = it
-        })
+        }
         main.btnShuffle.setOnClickListener {
             model.shuffle()
         }
 
     }
-    private fun getCardName(c: Int): String {
+    @SuppressLint("DiscouragedApi")
+    private fun getCardDrawableId(c: Int): Int {
         var shape = when (c / 13) {
             0 -> "spades"
             1 -> "diamonds"
@@ -72,6 +69,7 @@ class MainActivity : AppCompatActivity() {
             }
             else -> "error"
         }
-        return "c_${number}_of_${shape}"
+        val resName = "c_${number}_of_${shape}"
+        return resources.getIdentifier(resName, "drawable", packageName)
     }
 }
